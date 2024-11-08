@@ -4,7 +4,7 @@ A chat interface for AI models using Simplemind.
 
 ## Overview
 
-SimpleChat is a command-line chat application that provides an interactive interface for conversing with AI models. It features memory persistence, context awareness, and support for multiple AI providers.
+Simplechat is a command-line chat application that provides an interactive interface for conversing with AI models. It features memory persistence, context awareness, and support for multiple AI providers.
 
 ## Features
 
