@@ -1,4 +1,4 @@
-# SimpleChat
+# Simplechat
 
 A chat interface for AI models using Simplemind.
 
