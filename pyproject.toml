@@ -1,6 +1,6 @@
 [project]
 name = "simplemind-chat"
-version = "0.1.3"
+version = "0.1.4"
 description = "A chat interface for AI models using Simplemind."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -10,7 +10,7 @@ dependencies = [
     "rich",
     "prompt_toolkit",
     "xerox",
-    "simplemind",
+    "simplemind[full]",
     "spacy",
     "nltk",
 ]
