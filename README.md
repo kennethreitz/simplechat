@@ -21,7 +21,7 @@ SimpleChat is a command-line chat application that provides an interactive inter
 Requires Python 3.11 or higher.
 
 ```bash
-pip install simplechat
+$ pip install simplemind-chat
 ```
 
 ## Usage

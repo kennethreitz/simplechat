@@ -1,5 +1,5 @@
 [project]
-name = "simplechat"
+name = "simplemind-chat"
 version = "0.1.0"
 description = "A chat interface for AI models using Simplemind."
 readme = "README.md"
