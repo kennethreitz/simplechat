@@ -1,0 +1,19 @@
+[project]
+name = "simplechat"
+version = "0.1.0"
+description = "A chat interface for AI models using Simplemind."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "appdirs",
+    "sqlalchemy",
+    "records",
+    "docopt",
+    "rich",
+    "prompt_toolkit",
+    "pydantic",
+    "xerox"
+]
+
+[project.scripts]
+simplechat = "simplechat.cli:main"
