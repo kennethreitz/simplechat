@@ -32,6 +32,15 @@ Start a chat session:
 $ simplechat [--provider=<provider>] [--model=<model>]
 ```
 
+API keys should be set in environment variables before running:
+
+```bash
+$ export OPENAI_API_KEY="..."
+$ export ANTHROPIC_API_KEY="..."
+$ export XAI_API_KEY="..."
+$ export OLLAMA_API_KEY="..."
+```
+
 Options:
 - `--provider`: LLM provider to use (openai/anthropic/xai/ollama)
 - `--model`: Specific model to use (e.g. o1-preview)
