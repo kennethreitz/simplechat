@@ -12,7 +12,8 @@ dependencies = [
     "rich",
     "prompt_toolkit",
     "pydantic",
-    "xerox"
+    "xerox",
+    "simplemind"
 ]
 
 [project.scripts]
