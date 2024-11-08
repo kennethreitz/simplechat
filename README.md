@@ -29,7 +29,7 @@ $ pip install simplemind-chat
 Start a chat session:
 
 ```bash
-simplechat [--provider=<provider>] [--model=<model>]
+$ simplechat [--provider=<provider>] [--model=<model>]
 ```
 
 Options:
