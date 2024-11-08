@@ -58,7 +58,7 @@ Options:
 ## Features in Detail
 
 ### Memory System
-SimpleChat includes a sophisticated memory system that:
+Simplechat includes a sophisticated memory system that:
 - Tracks conversation topics and entities
 - Maintains user identity across sessions
 - Records user preferences and characteristics
