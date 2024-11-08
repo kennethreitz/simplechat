@@ -11,7 +11,8 @@ dependencies = [
     "prompt_toolkit",
     "xerox",
     "simplemind",
-    "spacy"
+    "spacy",
+    "nltk",
 ]
 
 [project.scripts]
