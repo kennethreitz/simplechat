@@ -9,3 +9,6 @@ wheels/
 # Virtual environments
 .venv
 .envrc
+.python-version
+t.py
+.vscode/settings.json

@@ -46,13 +46,6 @@ Options:
 - `/invoke` - Invoke a specific persona
 - `/memories` - Display conversation memories
 
-## Dependencies
-
-```toml
-startLine: 7
-endLine: 17
-```
-
 ## Features in Detail
 
 ### Memory System
