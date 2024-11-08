@@ -1,9 +1,31 @@
 import docopt
 import re
+import sys
+import subprocess
+
+import spacy
+from spacy.cli import download
+
+
+def ensure_spacy_model():
+    """Ensure the required spaCy model is downloaded."""
+    model_name = "en_core_web_sm"
+    try:
+        spacy.load(model_name)
+    except OSError:
+        console.print(f"Downloading required language model: {model_name}")
+        download(model_name)
+        console.print("Download complete!")
+
+
+from rich.console import Console
+
+console = Console()
+ensure_spacy_model()
 
 import xerox
 import simplemind as sm
-from rich.console import Console
+
 from rich.panel import Panel
 from prompt_toolkit import PromptSession
 from prompt_toolkit.styles import Style
@@ -39,8 +61,6 @@ Options:
     --provider=<provider>       LLM provider to use (openai/anthropic/xai/ollama)
     --model=<model>             Specific model to use (e.g. o1-preview)
 """
-
-console = Console()
 
 
 class Simplechat:
