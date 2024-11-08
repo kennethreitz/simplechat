@@ -4,24 +4,35 @@ import sys
 import subprocess
 
 import spacy
+import nltk
 from spacy.cli import download
 
 
-def ensure_spacy_model():
-    """Ensure the required spaCy model is downloaded."""
+def ensure_models():
+    """Ensure the required spaCy and NLTK models are downloaded."""
+    # SpaCy model
     model_name = "en_core_web_sm"
     try:
         spacy.load(model_name)
     except OSError:
-        console.print(f"Downloading required language model: {model_name}")
+        print(f"Downloading required spaCy model: {model_name}")
         download(model_name)
-        console.print("Download complete!")
+        print("SpaCy download complete!")
 
+    # NLTK punkt
+    try:
+        nltk.data.find("tokenizers/punkt")
+    except LookupError:
+        print("Downloading required NLTK punkt tokenizer")
+        nltk.download("punkt_tab")
+        print("NLTK download complete!")
+
+
+ensure_models()
 
 from rich.console import Console
 
 console = Console()
-ensure_spacy_model()
 
 import xerox
 import simplemind as sm
