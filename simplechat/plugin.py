@@ -279,8 +279,8 @@ class SimpleMemoryPlugin(sm.BasePlugin):
         # Limit to recent entities from the last 30 days
         recent_entities = self.retrieve_recent_entities(days=30)
 
-        # Trim conversation history to last 20 messages
-        conversation.messages = conversation.messages[-20:]
+        # Trim conversation history to last 12 messages
+        conversation.messages = conversation.messages[-12:]
 
         context_message = self.format_context_message(recent_entities)
         if context_message.strip():
