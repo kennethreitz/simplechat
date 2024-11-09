@@ -276,13 +276,15 @@ class SimpleMemoryPlugin(sm.BasePlugin):
                             f"Warning: Could not update last_seen after {max_retries} attempts: {str(e)}"
                         )
 
+        # Limit to recent entities from the last 30 days
         recent_entities = self.retrieve_recent_entities(days=30)
+
+        # Trim conversation history to last 20 messages
+        conversation.messages = conversation.messages[-20:]
 
         context_message = self.format_context_message(recent_entities)
         if context_message.strip():
-            conversation.add_message(
-                role="user", text=context_message
-            )  # Should be system role, but anthropic is picky.
+            conversation.add_message(role="user", text=context_message)
 
     def store_entity(self, entity: str, source: str = "user") -> None:
         """Store entity with retry logic"""
@@ -424,8 +426,8 @@ class SimpleMemoryPlugin(sm.BasePlugin):
             llm_model=self.llm_model, llm_provider=self.llm_provider
         )
 
-        # Add last few messages for context
-        recent_messages = conversation.messages[-3:]  # Get last 3 messages
+        # Add last 5 messages for context (reduced from 3 to capture more context)
+        recent_messages = conversation.messages[-5:]
         for msg in recent_messages:
             temp_conv.add_message(role=msg.role, text=msg.text)
 
