@@ -412,48 +412,6 @@ class SimpleMemoryPlugin(sm.BasePlugin):
 
         return "\n".join(summary_parts)
 
-    def store_llm_memory(self, conversation: sm.Conversation) -> None:
-        """Generate and store memories from the LLM's perspective of the conversation."""
-        MEMORY_PROMPT = """Based on the recent messages, what are the most important things to remember?
-        Focus on facts about the user, their preferences, and key discussion points.
-        Format each memory on a new line starting with MEMORY:
-        For example:
-        MEMORY: User prefers Python over JavaScript
-        MEMORY: User is working on a machine learning project"""
-
-        # Create a temporary conversation for memory generation
-        temp_conv = sm.create_conversation(
-            llm_model=self.llm_model, llm_provider=self.llm_provider
-        )
-
-        # Add last 5 messages for context (reduced from 3 to capture more context)
-        recent_messages = conversation.messages[-5:]
-        for msg in recent_messages:
-            temp_conv.add_message(role=msg.role, text=msg.text)
-
-        # Ask for memories
-        temp_conv.add_message(role="user", text=MEMORY_PROMPT)
-        response = temp_conv.send()
-
-        if not response or not response.text:
-            return
-
-        # Process and store memories
-        for line in response.text.splitlines():
-            line = line.strip()
-            if line.upper().startswith("MEMORY:"):
-                memory = line.replace("MEMORY:", "", 1).strip()
-                if memory and len(memory) > 3:  # Basic validation
-                    # Extract potential essence markers from the memory
-                    essence_markers = self.extract_essence_markers(memory)
-                    if essence_markers:
-                        # Store as essence markers if they match patterns
-                        for marker_type, marker_text in essence_markers:
-                            self.store_essence_marker(marker_type, marker_text)
-                    else:
-                        # Store as entity if no essence patterns match
-                        self.store_entity(memory, source="llm")
-
     def retrieve_recent_entities(self, days: int = 7) -> List[tuple]:
         """Retrieve recently mentioned entities with their frequency data."""
         try:
@@ -480,16 +438,6 @@ class SimpleMemoryPlugin(sm.BasePlugin):
                         self.store_entity(entity, source="llm")
                     except Exception as e:
                         print(f"✗ Failed to store entity {entity}: {str(e)}")
-            else:
-                print("No entities found in message")
-
-            # Process LLM memories
-            print("\nProcessing LLM memories...")
-            try:
-                self.store_llm_memory(conversation)
-                print("✓ Memories processed")
-            except Exception as e:
-                print(f"✗ Failed to process memories: {str(e)}")
 
         except Exception as e:
             print(f"Error in post_response_hook: {str(e)}")

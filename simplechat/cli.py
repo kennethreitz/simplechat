@@ -116,8 +116,8 @@ class Simplechat:
         self.conversation.add_message(role="user", text=message)
 
         # Send the message to the LLM.
-        with console.status("[bold green]Thinking...[/bold green]", spinner="dots"):
-            response = self.conversation.send()
+        console.print("[bold green]Thinking...[/bold green]")
+        response = self.conversation.send()
 
         return response
 
@@ -242,7 +242,6 @@ class Simplechat:
                         continue
 
                     elif user_input == "/memories":
-                        # Get the plugin instance
                         memory_plugin = next(
                             (
                                 p
@@ -254,9 +253,24 @@ class Simplechat:
 
                         if memory_plugin:
                             memories = memory_plugin.get_memories()
-                            markdown = Markdown(memories)
-                            console.print()
-                            console.print(markdown)
+
+                            # Add LLM summarization
+                            summary_prompt = (
+                                "Below are the conversation memories. Please provide a concise summary "
+                                "of the key points and important context:\n\n"
+                                + memories
+                            )
+
+                            console.print(
+                                "[bold yellow]Summarizing memories...[/bold yellow]"
+                            )
+                            summary_response = self.send(summary_prompt)
+
+                            console.print("\n[bold blue]Raw Memories:[/bold blue]")
+                            console.print(Markdown(memories))
+
+                            console.print("\n[bold blue]Memory Summary:[/bold blue]")
+                            console.print(Markdown(summary_response.text))
                             console.print()
                         else:
                             console.print(
