@@ -1,8 +1,7 @@
 import docopt
 import re
-import sys
-import subprocess
 from typing import Any
+
 import spacy
 import nltk
 from spacy.cli import download
@@ -109,15 +108,10 @@ class Simplechat:
             self.conversation.add_plugin(plugin())
 
     def send(self, message: str) -> Any:
-        # First, ensure the message is added to the conversation
         self.conversation.add_message(role="user", text=message)
+        with console.status("[yellow]Thinking...[/yellow]"):
+            response = self.conversation.send(message)
 
-        progress = Progress(
-            SpinnerColumn(), TextColumn("[yellow]Thinking..."), transient=True
-        )
-        with progress:
-            progress.add_task("", total=None)
-            response = self.conversation.send()
         return response
 
     @property
@@ -260,14 +254,7 @@ class Simplechat:
                                 + memories
                             )
 
-                            progress = Progress(
-                                SpinnerColumn(),
-                                TextColumn("[yellow]Summarizing memories..."),
-                                transient=True,
-                            )
-                            with progress:
-                                progress.add_task("", total=None)
-                                summary_response = self.send(summary_prompt)
+                            summary_response = self.send(summary_prompt)
 
                             console.print("\n[bold blue]Raw Memories:[/bold blue]")
                             console.print(Markdown(memories))
