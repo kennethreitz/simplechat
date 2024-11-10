@@ -2,7 +2,7 @@ import docopt
 import re
 import sys
 import subprocess
-
+from typing import Any
 import spacy
 import nltk
 from spacy.cli import download
@@ -31,6 +31,7 @@ def ensure_models():
 ensure_models()
 
 from rich.console import Console
+from rich.progress import Progress, SpinnerColumn, TextColumn
 
 console = Console()
 
@@ -107,18 +108,16 @@ class Simplechat:
         for plugin in PLUGINS:
             self.conversation.add_plugin(plugin())
 
-    def send(self, message):
-        """Send a message to the LLM."""
-        # Ensure the conversation is initialized.
-        assert self.conversation is not None
-
-        # Add the message to the conversation.
+    def send(self, message: str) -> Any:
+        # First, ensure the message is added to the conversation
         self.conversation.add_message(role="user", text=message)
 
-        # Send the message to the LLM.
-        console.print("[bold green]Thinking...[/bold green]")
-        response = self.conversation.send()
-
+        progress = Progress(
+            SpinnerColumn(), TextColumn("[yellow]Thinking..."), transient=True
+        )
+        with progress:
+            progress.add_task("", total=None)
+            response = self.conversation.send()
         return response
 
     @property
@@ -261,10 +260,14 @@ class Simplechat:
                                 + memories
                             )
 
-                            console.print(
-                                "[bold yellow]Summarizing memories...[/bold yellow]"
+                            progress = Progress(
+                                SpinnerColumn(),
+                                TextColumn("[yellow]Summarizing memories..."),
+                                transient=True,
                             )
-                            summary_response = self.send(summary_prompt)
+                            with progress:
+                                progress.add_task("", total=None)
+                                summary_response = self.send(summary_prompt)
 
                             console.print("\n[bold blue]Raw Memories:[/bold blue]")
                             console.print(Markdown(memories))
