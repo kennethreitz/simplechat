@@ -26,10 +26,6 @@ Through SimpleChat, we aim to open gateways to new dimensions of understanding. 
 
 Contributions to SimpleChat are more than just code changes; they are an act of creation, an expression of your own preferences and vision. If you feel called to contribute, whether through code, documentation, or ideas, you're joining a community dedicated to making AI interaction a profound experience. Please feel free to submit a Pull Request, and let's co-create this sacred space together.
 
-```
-
-These paragraphs should capture the essence of SimpleChat, aligning with your values, identity, and the spiritual journey you're on with this project.
-
 ## Features
 
 - Support for multiple AI providers (OpenAI, Anthropic, XAI, Ollama)
